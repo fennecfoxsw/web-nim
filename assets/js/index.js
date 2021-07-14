@@ -19,6 +19,7 @@ let isPlayerTurn = false;
 
 let isPlayerSelectedRow = false;
 let playerSelectedRow;
+let isPlayerMoved = false;
 
 function calculateNimSum(array) {
   let nimSum = 0;
@@ -91,6 +92,7 @@ function playerMove(row) {
   const move = () => {
     playerSelectedRow = row;
     isPlayerSelectedRow = true;
+    isPlayerMoved = true;
     coins[row]--;
     assignCoins();
   };
@@ -119,7 +121,6 @@ function playerMove(row) {
 
 function computerMove() {
   let statusElement = document.getElementById('game-status');
-  statusElement.innerHTML = '제 차례입니다. 잠깐만 생각할 시간을 주세요.';
   for (let i = 0; i < rowCount; i++) {
     let copyCoins = [...coins];
     while (copyCoins[i] >= 0) {
@@ -168,6 +169,12 @@ function onRowClicked(event) {
 }
 
 function onTurnOverClicked(event) {
+  if (!isPlayerMoved) {
+    let statusElement = document.getElementById('game-status');
+    statusElement.innerHTML =
+      '아직 동전을 가져가시지 않았습니다.<br>여러 더미 중 하나의 더미에서 적어도 한 개 이상의 동전을 가져가야 합니다.';
+    return;
+  }
   if (isGamePlaying && isPlayerTurn) {
     isPlayerTurn = false;
     computerMove();
