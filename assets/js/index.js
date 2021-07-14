@@ -34,10 +34,11 @@ function assignCoins() {
 function newGame(isClassic, rowCount, minCoins, maxCoins) {
   if (isClassic) {
     coins = [1, 3, 5, 7];
-    rowCount = 4;
-  } else
-    for (let i = 0; i < rowCount; i++)
+  } else {
+    for (let i = 0; i < rowCount; i++) {
       coins[i] = getRandomIntInclusive(minCoins, maxCoins);
+    }
+  }
 
   let gameRowElements = document.querySelectorAll('.game-row');
   if (rowCount === 3) {
@@ -137,7 +138,6 @@ function computerMove() {
   do randomRow = getRandomIntInclusive(1, rowCount - 1);
   while (coins[randomRow] === 0);
   let randomMove = getRandomIntInclusive(1, coins[randomRow]);
-  console.log(randomRow, randomMove);
   coins[randomRow] -= randomMove;
   isPlayerSelectedRow = false;
   playerSelectedRow = undefined;
@@ -150,7 +150,6 @@ function computerMove() {
 
 // Game Event
 function onRowClicked(event) {
-  console.log(event.srcElement.tagName);
   if (isPlayerTurn) {
     let selectedRow;
     if (event.srcElement.tagName === 'IMG') {
@@ -197,11 +196,14 @@ optionSaveButton.addEventListener('click', (event) => {
   let optionCoinPiles = optionCoinPilesElement.value;
   let optionMaxCoinRange = optionMaxCoinRangeElement.value;
 
+  if (optionIsClassic) {
+    optionCoinPiles = 4;
+    optionMaxCoinRange = 7;
+  }
+
   isClassic = optionIsClassic;
   rowCount = parseInt(optionCoinPiles);
   maxCoins = parseInt(optionMaxCoinRange);
-  console.log(isClassic, rowCount, maxCoins);
-  console.log(typeof isClassic, typeof rowCount, typeof maxCoins);
   newGame(isClassic, rowCount, minCoins, maxCoins);
 });
 
