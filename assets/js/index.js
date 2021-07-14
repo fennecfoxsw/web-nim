@@ -10,6 +10,8 @@ let rowCount = 4;
 let minCoins = 1;
 let maxCoins = 10;
 
+// Is game playing?
+let isGamePlaying = false;
 // On game coins
 let coins = [];
 // On game turn
@@ -50,6 +52,7 @@ function newGame(isClassic, rowCount, minCoins, maxCoins) {
   }
   isPlayerSelectedRow = false;
   playerSelectedRow = undefined;
+  isGamePlaying = true;
   assignCoins();
   decideWhoFirst();
   if (!isPlayerTurn) computerMove();
@@ -77,6 +80,7 @@ function isWin(isPlayerMove) {
       statusElement.innerHTML =
         '컴퓨터가 승리했습니다. New Game 버튼을 눌러 다시 시도해보세요.';
     }
+    isGamePlaying = false;
   }
 }
 
@@ -150,7 +154,7 @@ function computerMove() {
 
 // Game Event
 function onRowClicked(event) {
-  if (isPlayerTurn) {
+  if (isGamePlaying && isPlayerTurn) {
     let selectedRow;
     if (event.srcElement.tagName === 'IMG') {
       selectedRow = event.srcElement.parentNode.parentNode.parentNode;
@@ -164,7 +168,7 @@ function onRowClicked(event) {
 }
 
 function onTurnOverClicked(event) {
-  if (isPlayerTurn) {
+  if (isGamePlaying && isPlayerTurn) {
     isPlayerTurn = false;
     computerMove();
   }
