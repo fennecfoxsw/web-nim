@@ -130,6 +130,7 @@ function computerMove() {
         isPlayerSelectedRow = false;
         playerSelectedRow = undefined;
         isPlayerTurn = true;
+        isPlayerMoved = false;
         statusElement.innerHTML =
           '당신의 차례입니다. 동전을 가져갈 줄을 선택해 클릭해주세요. 한번 선택하시면 바꿀 수 없습니다.';
         isWin(false);
@@ -147,6 +148,7 @@ function computerMove() {
   isPlayerSelectedRow = false;
   playerSelectedRow = undefined;
   isPlayerTurn = true;
+  isPlayerMoved = false;
   statusElement.innerHTML =
     '당신의 차례입니다. 동전을 가져갈 줄을 선택해 클릭해주세요. 한번 선택하시면 바꿀 수 없습니다.';
   isWin(false);
