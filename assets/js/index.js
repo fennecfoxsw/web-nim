@@ -10,16 +10,13 @@ let rowCount = 4;
 let minCoins = 1;
 let maxCoins = 10;
 
-// Is game playing?
 let isGamePlaying = false;
-// On game coins
-let coins = [];
-// On game turn
 let isPlayerTurn = false;
-
 let isPlayerSelectedRow = false;
 let playerSelectedRow;
 let isPlayerMoved = false;
+
+let coins = [];
 
 function calculateNimSum(array) {
   let nimSum = 0;
@@ -31,7 +28,9 @@ function assignCoins() {
   let coinSpans = document.querySelectorAll('.game-row-coin');
   for (let i = 0; i < rowCount; i++)
     coinSpans[i].innerHTML = '⚫'.repeat(coins[i]);
-  twemoji.parse(document.body, { className: 'emoji mx-3' });
+  twemoji.parse(document.getElementById('game-board'), {
+    className: 'emoji mx-3',
+  });
 }
 
 function newGame(isClassic, rowCount, minCoins, maxCoins) {
@@ -115,7 +114,9 @@ function playerMove(row) {
       isWin(true);
     }
   } else {
-    statusElement.innerHTML = `줄을 잘못 선택하셨습니다.`;
+    statusElement.innerHTML = `줄을 잘못 선택하셨습니다. ${
+      playerSelectedRow + 1
+    }번째 줄에서만 동전을 가져가주세요.`;
   }
 }
 
@@ -159,18 +160,20 @@ function computerMove() {
 function onRowClicked(event) {
   if (isGamePlaying && isPlayerTurn) {
     let selectedRow;
-    if (event.srcElement.tagName === 'IMG') {
-      selectedRow = event.srcElement.parentNode.parentNode.parentNode;
-    } else if (event.srcElement.tagName === 'SPAN') {
-      selectedRow = event.srcElement.parentNode.parentNode;
+    let clickedElement = event.target;
+    if (clickedElement.tagName === 'IMG') {
+      selectedRow = clickedElement.parentNode.parentNode.parentNode;
+    } else if (clickedElement.tagName === 'SPAN') {
+      selectedRow = clickedElement.parentNode.parentNode;
     } else {
-      selectedRow = event.srcElement.parentNode;
+      selectedRow = clickedElement.parentNode;
     }
     playerMove(selectedRow.dataset.gameRow);
   }
 }
 
 function onTurnOverClicked(event) {
+  if (!isGamePlaying) return;
   if (!isPlayerMoved) {
     let statusElement = document.getElementById('game-status');
     statusElement.innerHTML =
@@ -222,7 +225,7 @@ optionSaveButton.addEventListener('click', (event) => {
 
 let optionMaxCoinRangeElement = document.getElementById('max-coins-range');
 optionMaxCoinRangeElement.addEventListener('change', (event) => {
-  document.getElementById('option-now-coin').innerHTML = event.srcElement.value;
+  document.getElementById('option-now-coin').innerHTML = event.target.value;
 });
 optionButton.addEventListener('click', (event) => {
   document.getElementById('option-now-coin').innerHTML = maxCoins;
