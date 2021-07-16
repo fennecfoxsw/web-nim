@@ -53,6 +53,7 @@ function newGame(isClassic, rowCount, minCoins, maxCoins) {
   isPlayerSelectedRow = false;
   playerSelectedRow = undefined;
   isGamePlaying = true;
+  isPlayerMoved = false;
   assignCoins();
   decideWhoFirst();
   if (!isPlayerTurn) computerMove();
