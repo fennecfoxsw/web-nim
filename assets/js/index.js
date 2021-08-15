@@ -67,6 +67,43 @@ function storageAvailable(type) {
   }
 }
 
+// Language
+const pageLanguage = document.documentElement.lang;
+const userLanguage = navigator.language;
+const changeLanguageAlert = document.getElementById('change-language');
+if (
+  (pageLanguage === 'ko' && userLanguage !== 'ko-KR') ||
+  (pageLanguage === 'en' && userLanguage === 'ko-KR')
+) {
+  changeLanguageAlert.style = 'display: block;';
+  const dismissButton = document.getElementById('language-dismiss-button');
+  dismissButton.addEventListener('click', () => {
+    changeLanguageAlert.style = 'display: none;';
+  });
+}
+
+let languageData;
+fetch('../assets/js/language.json')
+  .then((response) => response.json())
+  .then((data) => (languageData = data[pageLanguage]))
+  .catch((error) => notyf.error("Can't load language!"));
+
+const engine = new liquidjs.Liquid();
+function getLanguageWithValue(message, values) {
+  const languageMessage = languageData[message];
+  const parsedTemplete = engine.parse(languageMessage);
+  return engine.renderSync(parsedTemplete, values);
+}
+
+// Original Code
+// Copyright © 2009 Fortune_Cookie_
+// https://community.shopify.com/c/Shopify-Design/Ordinal-Number-in-javascript-1st-2nd-3rd-4th/m-p/72156
+function getGetOrdinal(n) {
+  let s = ['th', 'st', 'nd', 'rd'];
+  let v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
 // Game Options
 let isClassic = true;
 let numberOfCoinPiles = 4;
@@ -128,17 +165,16 @@ function newGame(isClassic, numberOfCoinPiles, minCoins, maxCoins) {
   remapCoins();
   decideWhoFirst();
   if (!isPlayerTurn) isComputerFirst = true;
-  notyf.open({ type: 'info', message: '새 게임을 시작합니다.' });
+  notyf.open({ type: 'info', message: languageData.toastNewGame });
 }
 
 function decideWhoFirst() {
   let nimSum = calculateNimSum(coins);
   if (nimSum !== 0) {
-    statusElement.innerHTML = '당신이 먼저 시작합니다.';
+    statusElement.innerHTML = languageData.youFirst;
     isPlayerTurn = true;
   } else {
-    statusElement.innerHTML =
-      '컴퓨터가 먼저 시작합니다. 턴 넘기기 버튼을 눌러주세요.';
+    statusElement.innerHTML = languageData.computerFirst;
     isPlayerTurn = false;
   }
 }
@@ -147,17 +183,18 @@ function isWin(isPlayerMove) {
   const getArraySum = (array) => array.reduce((a, b) => a + b, 0);
   if (getArraySum(coins) === 0) {
     if (isPlayerMove) {
-      statusElement.innerHTML = '당신이 승리했습니다!';
+      statusElement.innerHTML = languageData.youWin;
     } else {
-      statusElement.innerHTML =
-        '컴퓨터가 승리했습니다. New Game 버튼을 눌러 다시 시도해보세요.';
+      statusElement.innerHTML = languageData.computerWin;
     }
     isGamePlaying = false;
   }
 }
 
 function playerMove(row) {
-  statusElement.innerHTML = `${row}번째 줄을 선택하셨습니다. 원하시는 만큼 클릭해 동전을 가져가시고 턴 넘기기 버튼을 눌러주세요.`;
+  statusElement.innerHTML = getLanguageWithValue('rowSelected', {
+    row: getGetOrdinal(row),
+  });
   row -= 1;
   const move = () => {
     playerSelectedRow = row;
@@ -168,26 +205,26 @@ function playerMove(row) {
   };
   if (!isPlayerSelectedRow) {
     if (coins[row] === 0)
-      statusElement.innerHTML = `${
-        row + 1
-      }번째 줄은 더이상 동전을 가져갈 수 없습니다. 아래 턴 넘기기 버튼을 눌러주세요.`;
+      statusElement.innerHTML = getLanguageWithValue('rowCanNotTake', {
+        row: getGetOrdinal(row + 1),
+      });
     else {
       move();
       isWin(true);
     }
   } else if (row === playerSelectedRow) {
     if (coins[row] === 0)
-      statusElement.innerHTML = `${
-        row + 1
-      }번째 줄은 더이상 동전을 가져갈 수 없습니다. 아래 턴 넘기기 버튼을 눌러주세요.`;
+      statusElement.innerHTML = getLanguageWithValue('rowCanNotTake', {
+        row: getGetOrdinal(row + 1),
+      });
     else {
       move();
       isWin(true);
     }
   } else {
-    statusElement.innerHTML = `줄을 잘못 선택하셨습니다. ${
-      playerSelectedRow + 1
-    }번째 줄에서만 동전을 가져가주세요.`;
+    statusElement.innerHTML = getLanguageWithValue('wrongRow', {
+      row: getGetOrdinal(playerSelectedRow + 1),
+    });
   }
 }
 
@@ -202,8 +239,7 @@ function computerMove() {
         playerSelectedRow = null;
         isPlayerTurn = true;
         isPlayerMoved = false;
-        statusElement.innerHTML =
-          '당신의 차례입니다. 동전을 가져갈 줄을 선택해 클릭해주세요. 한번 선택하시면 바꿀 수 없습니다.';
+        statusElement.innerHTML = languageData.yourTurn;
         isWin(false);
         remapCoins();
         return;
@@ -220,8 +256,7 @@ function computerMove() {
   playerSelectedRow = null;
   isPlayerTurn = true;
   isPlayerMoved = false;
-  statusElement.innerHTML =
-    '당신의 차례입니다. 동전을 가져갈 줄을 선택해 클릭해주세요. 한번 선택하시면 바꿀 수 없습니다.';
+  statusElement.innerHTML = languageData.yourTurn;
   isWin(false);
   remapCoins();
 }
@@ -229,8 +264,7 @@ function computerMove() {
 // Game Event
 function onRowClicked(event) {
   if (isGamePlaying && isComputerFirst) {
-    statusElement.innerHTML =
-      '컴퓨터가 시작하지 않았습니다. 턴 넘기기 버튼을 눌러주세요.';
+    statusElement.innerHTML = languageData.computerNotStarted;
     return;
   }
   if (isGamePlaying && isPlayerTurn) {
@@ -255,8 +289,7 @@ function onTurnOverClicked(event) {
     return;
   }
   if (!isPlayerMoved) {
-    statusElement.innerHTML =
-      '아직 동전을 가져가시지 않았습니다.<br>여러 더미 중 하나의 더미에서 적어도 한 개 이상의 동전을 가져가야 합니다.';
+    statusElement.innerHTML = languageData.youAreNotTaked;
     return;
   }
   if (isGamePlaying && isPlayerTurn) {
@@ -287,8 +320,7 @@ document.addEventListener('keydown', (event) => {
       if (numberOfCoinPiles === 4) {
         newEvent.target = document.querySelector('#game-row-4-tr td');
       } else {
-        statusElement.innerHTML =
-          '잘못된 키를 누르셨습니다. 현재 게임에서는 코인 더미가 3개입니다.';
+        statusElement.innerHTML = languageData.wrongKey;
         return;
       }
     }
@@ -336,12 +368,12 @@ function saveOption(isClassic, numberOfCoinPiles, minCoins, maxCoins) {
     localStorage.setItem('maxCoins', maxCoins);
     notyf.open({
       type: 'success',
-      message: '옵션이 성공적으로 저장되었습니다.',
+      message: languageData.optionSaved,
     });
   } else {
     notyf.open({
       type: 'warning',
-      message: '이 브라우저에서는 옵션을 저장 또는 로드할 수 없습니다.',
+      message: languageData.browserCanNotSaveLoadOption,
     });
   }
 }
@@ -362,12 +394,12 @@ function loadOption() {
     }
     notyf.open({
       type: 'success',
-      message: '옵션을 성공적으로 가져왔습니다.',
+      message: languageData.optionLoaded,
     });
   } else {
     notyf.open({
       type: 'warning',
-      message: '이 브라우저에서는 옵션을 저장 또는 로드할 수 없습니다.',
+      message: languageData.browserCanNotSaveLoadOption,
     });
   }
 }

@@ -1,0 +1,36 @@
+{
+  "ko": {
+    "toastNewGame": "새 게임을 시작합니다.",
+    "youFirst": "당신이 먼저 시작합니다.",
+    "computerFirst": "컴퓨터가 먼저 시작합니다. 턴 넘기기 버튼을 눌러주세요.",
+    "youWin": "당신이 승리했습니다!",
+    "computerWin": "컴퓨터가 승리했습니다. New Game 버튼을 눌러 다시 시도해보세요.",
+    "rowSelected": "{{row}}번째 줄을 선택하셨습니다. 원하시는 만큼 클릭해 동전을 가져가시고 턴 넘기기 버튼을 눌러주세요.",
+    "rowCanNotTake": "{{row}}번째 줄은 더이상 동전을 가져갈 수 없습니다. 아래 턴 넘기기 버튼을 눌러주세요.",
+    "wrongRow": "줄을 잘못 선택하셨습니다. {{row}}번째 줄에서만 동전을 가져가주세요.",
+    "yourTurn": "당신의 차례입니다. 동전을 가져갈 줄을 선택해 클릭해주세요. 한번 선택하시면 바꿀 수 없습니다.",
+    "computerNotStarted": "컴퓨터가 시작하지 않았습니다. 턴 넘기기 버튼을 눌러주세요.",
+    "youAreNotTaked": "아직 동전을 가져가시지 않았습니다.<br>여러 더미 중 하나의 더미에서 적어도 한 개 이상의 동전을 가져가야 합니다.",
+    "wrongKey": "잘못된 키를 누르셨습니다. 현재 게임에서는 코인 더미가 3개입니다.",
+    "optionSaved": "옵션이 성공적으로 저장되었습니다.",
+    "browserCanNotSaveLoadOption": "이 브라우저에서는 옵션을 저장 또는 로드할 수 없습니다.",
+    "optionLoaded": "옵션을 성공적으로 가져왔습니다."
+  },
+  "en": {
+    "toastNewGame": "New game started.",
+    "youFirst": "You start first.",
+    "computerFirst": "Computer starts first. Please click 'Pass Turn' button.",
+    "youWin": "You win!",
+    "computerWin": "Computer win. Press 'New Game' button to restart.",
+    "rowSelected": "{{row}} pile selected. Click as many times as you want to take a coin and press the 'Pass Turn' button.",
+    "rowCanNotTake": "You can't take any more coins on the {{row}} pile. Please press the turn-over button below.",
+    "wrongRow": "Wrong pile selected. Please take coins from the {{row}} pile only.",
+    "yourTurn": "Your turn. Select the pile you want to take the coin from and click on it. Once selected, it cannot be changed.",
+    "computerNotStarted": "Computer has not started. Please click 'Pass Turn' button.",
+    "youAreNotTaked": "You haven't taken your coins yet.<br>You must take at least one coin from one of the many piles.",
+    "wrongKey": "Wrong key pressed. There are currently 3 coin piles in the game.",
+    "optionSaved": "Option saved successfully.",
+    "browserCanNotSaveLoadOption": "In this browser, you cannot save or load options",
+    "optionLoaded": "Option loaded successfully."
+  }
+}
