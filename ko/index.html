@@ -2,142 +2,171 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Game of Nim</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    .noselect {
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    .game-row {
-      height: 100px;
-    }
-  </style>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet" />
+  <link href="../assets/css/index.css" rel="stylesheet" />
 </head>
 
-<body style="background-color: #1d1d1d; font-family: 'Noto Sans KR', sans-serif;">
-  <header class="bg-light text-center py-3 mb-10" id="change-language" style="display: none;">
+<body>
+  <header class="bg-light text-center py-3 mb-10" id="change-language"
+    style="display: none">
     <div class="container">
-      <h4 class="fw-light text-dark">Are you looking for an english version?</h4>
+      <h4 class="fw-light text-dark">Are you looking for an english version?
+      </h4>
       <div class="btn-group" role="group">
         <a class="btn btn-primary" href="/en">Go to English version</a>
-        <button id="language-dismiss-button" class="btn btn-secondary">한국어 버전에 머무르기</button>
+        <button id="language-dismiss-button" class="btn btn-secondary">
+          한국어 버전에 머무르기
+        </button>
       </div>
     </div>
   </header>
   <div class="container text-center">
     <h1 class="mt-5 text-white">The Game of Nim</h1>
-    <p class="lead text-white-50">아래 여러개의 동전 더미가 있다. 각 플레이어는 자신의 차례가 오면 한 더미를 골라 최소 1개 이상의 동전을 가져가야 한다.<br>
-      만약 동전을 가져갈 수 없으면 게임에서 패배한다.</p>
-    <p class="lead text-white-50">따라서 마지막 동전을 가져간 사람이 승리한다.</p>
+    <p class="lead text-white-50">
+      아래 여러개의 동전 더미가 있다. 각 플레이어는 자신의 차례가 오면 한
+      더미를 골라 최소 1개 이상의 동전을 가져가야 한다.<br />
+      만약 동전을 가져갈 수 없으면 게임에서 패배한다.
+    </p>
+    <p class="lead text-white-50">
+      따라서 마지막 동전을 가져간 사람이 승리한다.
+    </p>
   </div>
   <div class="container text-center">
-    <h3 class="text-light" id="game-status" style="min-height: 1.75rem;">아래 New Game 버튼을 눌러 게임을 시작하거나 Option 버튼을 통해 게임
-      규칙을 직접 정해보세요.</h3>
-    <button type="button" class="btn btn-primary my-2" id="option-btn" data-bs-toggle="modal"
-      data-bs-target="#option-modal">Option</button>
-    <button type="button" class="btn btn-primary my-2" id="new-game-btn">New Game</button>
+    <h3 class="text-light" id="game-status">
+      아래 New Game 버튼을 눌러 게임을 시작하거나 Option 버튼을 통해 게임
+      규칙을 직접 정해보세요.
+    </h3>
+    <a class="btn btn-primary" href="/en">English</a>
+    <button type="button" class="btn btn-primary my-2" id="option-btn"
+      data-bs-toggle="modal" data-bs-target="#option-modal">
+      Option
+    </button>
+    <button type="button" class="btn btn-primary my-2" id="new-game-btn">
+      New Game
+    </button>
     <table class="table table-light noselect" id="game-board">
       <tbody>
-        <tr id="game-row-1-tr" class="game-row" data-game-row="1">
+        <tr id="game-row-1-tr" class="game-row" data-game-row="0">
           <td>
             <span id="game-row-1" class="game-row-coin"></span>
           </td>
         </tr>
-        <tr id="game-row-2-tr" class="game-row" data-game-row="2">
+        <tr id="game-row-2-tr" class="game-row" data-game-row="1">
           <td>
             <span id="game-row-2" class="game-row-coin"></span>
           </td>
         </tr>
-        <tr id="game-row-3-tr" class="game-row" data-game-row="3">
+        <tr id="game-row-3-tr" class="game-row" data-game-row="2">
           <td>
             <span id="game-row-3" class="game-row-coin"></span>
           </td>
         </tr>
-        <tr id="game-row-4-tr" class="game-row" data-game-row="4">
+        <tr id="game-row-4-tr" class="game-row" data-game-row="3">
           <td>
             <span id="game-row-4" class="game-row-coin"></span>
           </td>
         </tr>
       </tbody>
     </table>
-    <button type="button" class="btn btn-primary my-2" id="turn-over-btn">턴 넘기기</button>
+    <button type="button" class="btn btn-primary my-2" id="turn-over-btn">
+      턴 넘기기
+    </button>
   </div>
 
-  <div class="modal fade noselect" id="option-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="option-modal-title" aria-hidden="true">
+  <div class="modal fade noselect" id="option-modal" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="option-modal-title"
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="option-modal-title">게임 설정</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p class="text-dark">게임의 규칙을 설정합니다.</p>
-          <hr>
-          <p class="text-dark">클래식한 모드로 할까요?<br>(클래식한 모드는 4줄에 각각 1개, 3개, 5개, 7개의 코인이 배치되는 게임을 의미합니다. 이 경우 컴퓨터가 먼저
-            시작합니다.)</p>
+          <hr />
+          <p class="text-dark">
+            클래식한 모드로 할까요?
+            <br />
+            (클래식한 모드는 4줄에 각각 1개, 3개, 5개, 7개의 코인이 배치되는
+            게임을 의미합니다. 이 경우 컴퓨터가 먼저 시작합니다.)
+          </p>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="is-classic-checkbox">
+            <input class="form-check-input" type="checkbox" value=""
+              id="is-classic-checkbox" />
             <label class="form-check-label" for="is-classic-checkbox">
               클래식한 모드로 즐기기
             </label>
           </div>
-          <hr>
+          <hr />
           <p class="text-dark">코인의 더미 개수를 설정합니다.</p>
-          <select class="form-select" aria-label="Coin piles" id="coin-piles-select">
+          <select class="form-select" aria-label="Coin piles"
+            id="coin-piles-select">
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          <hr>
-          <label for="max-coins" class="form-label">최대 코인 개수를 설정합니다: <span id="option-now-coin"></span>개</label>
-          <input type="range" class="form-range" min="2" max="10" id="max-coins-range">
+          <hr />
+          <label for="max-coins" class="form-label">
+            최대 코인 개수를 설정합니다:
+            <span id="option-now-coin"></span>
+            개
+          </label>
+          <input type="range" class="form-range" min="2" max="10"
+            id="max-coins-range" />
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="option-save-btn">저장 후 새 게임</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            닫기
+          </button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+            id="option-save-btn">
+            저장 후 새 게임
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <footer style="flex-shrink: none; background-color: #262626;" class="py-4 text-light">
+  <footer class="footer py-4 text-light">
     <div class="container text-center">
-      <small>Keyboard: 새 게임: N | 턴 넘기기: Enter, Space | 옵션 열기: Esc | 첫 번째 줄: 1, D | 두 번째 줄: 2, F | 세 번째 줄: 3, J | 네 번째 줄:
-        4, K</small>
+      <small>
+        Keyboard: 새 게임: N | 턴 넘기기: Enter, Space | 옵션 열기: Esc | 첫
+        번째 줄: 1, D | 두 번째 줄: 2, F | 세 번째 줄: 3, J | 네 번째 줄: 4, K
+      </small>
     </div>
   </footer>
-  <footer style="flex-shrink: none; background-color: #262626;" class="py-4 text-light">
+  <footer class="footer py-4 text-light">
     <div class="container text-center">
-      <small>Made with ❤️ by FennecFoxSW | <a href="https://github.com/FennecFoxSW/web-nim">GitHub</a></small>
+      <span>
+        Made with ❤️ by FennecFoxSW |
+        <a href="https://github.com/FennecFoxSW/web-nim">GitHub</a>
+      </span>
     </div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+  <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"
-    integrity="sha512-RdSPYh1WA6BF0RhpisYJVYkOyTzK4HwofJ3Q7ivt/jkpW6Vc8AurL1R+4AUcvn9IwEKAPm/fk7qFZW3OuiUDeg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/liquidjs/dist/liquid.browser.umd.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/liquidjs/dist/liquid.browser.min.js">
+  </script>
   <script src="../assets/js/index.js"></script>
 </body>
 
