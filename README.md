@@ -1,6 +1,12 @@
 # Web Nim
 
+<img alt="Web Nim Image" src="https://nim.fennecfoxsw.tk/media/WebNimImage.png" width="600">
+
 Nim (game) that I made on the web.
+
+> The answer is hidden behind a coin.
+>
+> \- FennecFoxSW
 
 ## Game Rule
 
