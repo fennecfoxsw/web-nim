@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+	xmlns:xhtml="http://www.w3.org/1999/xhtml">
+	<url>
+		<loc>https://nim.fennecfoxsw.tk/</loc>
+	</url>
+	<url>
+		<loc>https://nim.fennecfoxsw.tk/en</loc>
+		<xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://nim.fennecfoxsw.tk/en"/>
+    <xhtml:link
+               rel="alternate"
+               hreflang="ko"
+               href="https://nim.fennecfoxsw.tk/ko"/>
+	</url>
+	<url>
+		<loc>https://nim.fennecfoxsw.tk/ko</loc>
+		<xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://nim.fennecfoxsw.tk/en"/>
+    <xhtml:link
+               rel="alternate"
+               hreflang="ko"
+               href="https://nim.fennecfoxsw.tk/ko"/>
+	</url>
+</urlset>
