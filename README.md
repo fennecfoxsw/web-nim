@@ -1,7 +1,19 @@
-# web-nim
+# Web Nim
 
-웹으로 만들어본 Nim 게임.
+Nim (game) that I made on the web.
 
-## The Game of Nim
+## Game Rule
 
-여러개의 동전 더미가 있다. 각 플레이어는 자신의 차례가 오면 한 더미를 골라 최소 1개 이상의 동전을 가져가야 한다. 만약 동전을 가져갈 수 없으면 게임에서 패배한다. 따라서 **마지막 동전을 가져간 사람이 승리**한다.
+There are several piles of coins below. Each player must pick a pile and take at least one coin when it is player's turn. So the one **who takes the last coin** is the winner.
+
+## Keyboard shortcuts
+
+| Shortcut         | Action      |
+| ---------------- | ----------- |
+| `N`              | New game    |
+| `Enter`, `Space` | Pass turn   |
+| `Esc`            | Options     |
+| `1`, `D`         | First pile  |
+| `2`, `F`         | Second pile |
+| `3`, `J`         | Third pile  |
+| `4`, `K`         | Forth pile  |
