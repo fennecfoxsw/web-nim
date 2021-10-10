@@ -21,6 +21,7 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <link href="../assets/css/index.css" rel="stylesheet" />
 </head>
 
@@ -38,30 +39,36 @@
     </div>
   </header>
   <div class="container text-center">
-    <h1 class="mt-5 text-white">The Game of Nim</h1>
-    <p class="lead text-white-50">
+    <h1 class="mt-5 text-white" data-aos="fade-down" data-aos-delay="50">The
+      Game of Nim</h1>
+    <p class="lead text-white-50" data-aos="fade-down" data-aos-delay="100">
       There are several piles of coins below. Each player must pick a pile and
       take at least one coin when it is the player's turn.<br />
       If player is unable to take he loses.
     </p>
-    <p class="lead text-white-50">
+    <p class="lead text-white-50" data-aos="fade-down" data-aos-delay="150">
       So the one who takes the last coin is the winner.
     </p>
   </div>
   <div class="container text-center">
-    <h3 class="text-light" id="game-status">
+    <h3 class="text-light" id="game-status" data-aos="fade-down"
+      data-aos-delay="200">
       Click the 'New Game' button below to start the game, or click the
       'Option' button to set game rules.
     </h3>
-    <a class="btn btn-primary" href="/ko">Korean</a>
+    <a class="btn btn-primary" href="/ko" data-aos="fade-right"
+      data-aos-delay="200">Korean</a>
     <button type="button" class="btn btn-primary my-2" id="option-btn"
-      data-bs-toggle="modal" data-bs-target="#option-modal">
+      data-bs-toggle="modal" data-bs-target="#option-modal" data-aos="fade-up"
+      data-aos-delay="200">
       Option
     </button>
-    <button type="button" class="btn btn-primary my-2" id="new-game-btn">
+    <button type="button" class="btn btn-primary my-2" id="new-game-btn"
+      data-aos="fade-left" data-aos-delay="200">
       New Game
     </button>
-    <table class="table table-light noselect" id="game-board">
+    <table class="table table-light noselect" id="game-board" data-aos="fade-up"
+      data-aos-delay="200">
       <tbody>
         <tr id="game-row-1-tr" class="game-row" data-game-row="0">
           <td>
@@ -85,7 +92,8 @@
         </tr>
       </tbody>
     </table>
-    <button type="button" class="btn btn-primary my-2" id="turn-over-btn">
+    <button type="button" class="btn btn-primary my-2" id="turn-over-btn"
+      data-aos="fade-up" data-aos-delay="250">
       Pass Turn
     </button>
   </div>
@@ -141,7 +149,8 @@
       </div>
     </div>
   </div>
-  <footer class="footer py-4 text-light">
+  <footer class="footer py-4 text-light" data-aos="fade-up"
+    data-aos-delay="300">
     <div class="container text-center">
       <small>
         Keyboard: New Game: N | Pass turn: Enter, Space | Options: Esc | First
@@ -149,7 +158,8 @@
       </small>
     </div>
   </footer>
-  <footer class="footer py-4 text-light">
+  <footer class="footer py-4 text-light" data-aos="fade-up"
+    data-aos-delay="350">
     <div class="container text-center">
       <span>
         Made with ❤️ by FennecFoxSW |
@@ -163,6 +173,7 @@
   <script
     src="https://cdn.jsdelivr.net/npm/liquidjs/dist/liquid.browser.min.js">
   </script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="../assets/js/index.js"></script>
 </body>
 

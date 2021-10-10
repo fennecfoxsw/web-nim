@@ -1,3 +1,11 @@
+/* global AOS */
+
+AOS.init({
+  duration: 500,
+  once: true,
+  offset: -9999,
+});
+
 const userLanguage = navigator.language;
 const koreanButton = document.getElementById('ko-button');
 const englishButton = document.getElementById('en-button');

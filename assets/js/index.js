@@ -1,4 +1,19 @@
-/* global Notyf, liquidjs, twemoji */
+/* global Notyf, liquidjs, twemoji, AOS */
+
+const checkElement = async (selector) => {
+  while (document.querySelector(selector) === null) {
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+  }
+  return document.querySelector(selector);
+};
+checkElement('#game-board').then(() => {
+  AOS.init({
+    duration: 500,
+    once: true,
+    offset: -9999,
+  });
+});
 
 const notyf = new Notyf({
   duration: 5000,
@@ -234,7 +249,7 @@ function playerMove(row) {
 
 function computerMove() {
   for (let i = 0; i < numberOfCoinPiles; i += 1) {
-    let copyCoins = [...coins];
+    const copyCoins = [...coins];
     while (copyCoins[i] > 0) {
       copyCoins[i] -= 1;
       if (calculateNimSum(copyCoins) === 0) {

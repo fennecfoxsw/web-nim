@@ -21,6 +21,7 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <link href="../assets/css/index.css" rel="stylesheet" />
 </head>
 
@@ -39,30 +40,36 @@
     </div>
   </header>
   <div class="container text-center">
-    <h1 class="mt-5 text-white">The Game of Nim</h1>
-    <p class="lead text-white-50">
+    <h1 class="mt-5 text-white" data-aos="fade-down" data-aos-delay="50">The
+      Game of Nim</h1>
+    <p class="lead text-white-50" data-aos="fade-down" data-aos-delay="100">
       아래 여러개의 동전 더미가 있다. 각 플레이어는 자신의 차례가 오면 한
       더미를 골라 최소 1개 이상의 동전을 가져가야 한다.<br />
       만약 동전을 가져갈 수 없으면 게임에서 패배한다.
     </p>
-    <p class="lead text-white-50">
+    <p class="lead text-white-50" data-aos="fade-down" data-aos-delay="150">
       따라서 마지막 동전을 가져간 사람이 승리한다.
     </p>
   </div>
   <div class="container text-center">
-    <h3 class="text-light" id="game-status">
+    <h3 class="text-light" id="game-status" data-aos="fade-down"
+      data-aos-delay="200">
       아래 New Game 버튼을 눌러 게임을 시작하거나 Option 버튼을 통해 게임
       규칙을 직접 정해보세요.
     </h3>
-    <a class="btn btn-primary" href="/en">English</a>
+    <a class="btn btn-primary" href="/en" data-aos="fade-right"
+      data-aos-delay="200">English</a>
     <button type="button" class="btn btn-primary my-2" id="option-btn"
-      data-bs-toggle="modal" data-bs-target="#option-modal">
+      data-bs-toggle="modal" data-bs-target="#option-modal" data-aos="fade-up"
+      data-aos-delay="200">
       Option
     </button>
-    <button type="button" class="btn btn-primary my-2" id="new-game-btn">
+    <button type="button" class="btn btn-primary my-2" id="new-game-btn"
+      data-aos="fade-left" data-aos-delay="200">
       New Game
     </button>
-    <table class="table table-light noselect" id="game-board">
+    <table class="table table-light noselect" id="game-board" data-aos="fade-up"
+      data-aos-delay="200">
       <tbody>
         <tr id="game-row-1-tr" class="game-row" data-game-row="0">
           <td>
@@ -86,7 +93,8 @@
         </tr>
       </tbody>
     </table>
-    <button type="button" class="btn btn-primary my-2" id="turn-over-btn">
+    <button type="button" class="btn btn-primary my-2" id="turn-over-btn"
+      data-aos="fade-up" data-aos-delay="250">
       턴 넘기기
     </button>
   </div>
@@ -145,7 +153,8 @@
       </div>
     </div>
   </div>
-  <footer class="footer py-4 text-light">
+  <footer class="footer py-4 text-light" data-aos="fade-up"
+    data-aos-delay="300">
     <div class="container text-center">
       <small>
         Keyboard: 새 게임: N | 턴 넘기기: Enter, Space | 옵션 열기: Esc | 첫
@@ -153,7 +162,8 @@
       </small>
     </div>
   </footer>
-  <footer class="footer py-4 text-light">
+  <footer class="footer py-4 text-light" data-aos="fade-up"
+    data-aos-delay="350">
     <div class="container text-center">
       <span>
         Made with ❤️ by FennecFoxSW |
@@ -167,6 +177,7 @@
   <script
     src="https://cdn.jsdelivr.net/npm/liquidjs/dist/liquid.browser.min.js">
   </script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="../assets/js/index.js"></script>
 </body>
 
