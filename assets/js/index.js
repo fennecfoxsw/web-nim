@@ -1,3 +1,5 @@
+/* global Notyf, liquidjs, twemoji */
+
 const notyf = new Notyf({
   duration: 5000,
   types: [
@@ -41,16 +43,14 @@ const notyf = new Notyf({
 });
 
 function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function storageAvailable(type) {
-  var storage;
+  let storage;
   try {
     storage = window[type];
-    var x = '__storage_test__';
+    const x = '__storage_test__';
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
@@ -85,8 +85,10 @@ if (
 let languageData;
 fetch('../assets/js/language.json')
   .then((response) => response.json())
-  .then((data) => (languageData = data[pageLanguage]))
-  .catch((error) => notyf.error("Can't load language!"));
+  .then((data) => {
+    languageData = data[pageLanguage];
+  })
+  .catch((error) => notyf.error(`Can't load language!\n${error}`));
 
 const engine = new liquidjs.Liquid();
 function getLanguageWithValue(message, values) {
@@ -99,8 +101,8 @@ function getLanguageWithValue(message, values) {
 // Copyright © 2009 Fortune_Cookie_
 // https://community.shopify.com/c/Shopify-Design/Ordinal-Number-in-javascript-1st-2nd-3rd-4th/m-p/72156
 function getGetOrdinal(n) {
-  let s = ['th', 'st', 'nd', 'rd'];
-  let v = n % 100;
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
@@ -117,19 +119,22 @@ let isPlayerSelectedRow = false;
 let playerSelectedRow;
 let isPlayerMoved = false;
 
-let statusElement = document.getElementById('game-status');
+const statusElement = document.getElementById('game-status');
 
 let coins = [];
 
 function calculateNimSum(array) {
   let nimSum = 0;
-  array.forEach((elem) => (nimSum ^= elem));
+  array.forEach((elem) => {
+    /* eslint no-bitwise: ["error", { "allow": ["^="] }] */
+    nimSum ^= elem;
+  });
   return nimSum;
 }
 
 function remapCoins() {
-  let coinSpans = document.querySelectorAll('.game-row-coin');
-  for (let i = 0; i < numberOfCoinPiles; i++)
+  const coinSpans = document.querySelectorAll('.game-row-coin');
+  for (let i = 0; i < numberOfCoinPiles; i += 1)
     coinSpans[i].innerHTML = '⚫'.repeat(coins[i]);
   const gameBoard = document.getElementById('game-board');
   twemoji.parse(gameBoard, { className: 'emoji mx-3' });
@@ -138,22 +143,33 @@ function remapCoins() {
   });
 }
 
-function newGame(isClassic, numberOfCoinPiles, minCoins, maxCoins) {
+function decideWhoFirst() {
+  const nimSum = calculateNimSum(coins);
+  if (nimSum !== 0) {
+    statusElement.innerHTML = languageData.youFirst;
+    isPlayerTurn = true;
+  } else {
+    statusElement.innerHTML = languageData.computerFirst;
+    isPlayerTurn = false;
+  }
+}
+
+function newGame() {
   if (isClassic) {
     coins = [1, 3, 5, 7];
   } else {
-    for (let i = 0; i < numberOfCoinPiles; i++) {
+    for (let i = 0; i < numberOfCoinPiles; i += 1) {
       coins[i] = getRandomIntInclusive(minCoins, maxCoins);
     }
   }
 
-  let gameRowElements = document.querySelectorAll('.game-row');
+  const gameRowElements = document.querySelectorAll('.game-row');
   if (numberOfCoinPiles === 3) {
-    let forHide = gameRowElements[gameRowElements.length - 1];
+    const forHide = gameRowElements[gameRowElements.length - 1];
     forHide.style = 'display: none;';
     coins[3] = 0;
   } else if (numberOfCoinPiles === 4) {
-    let forShow = gameRowElements[gameRowElements.length - 1];
+    const forShow = gameRowElements[gameRowElements.length - 1];
     forShow.style = 'display: table-row;';
   }
 
@@ -166,17 +182,6 @@ function newGame(isClassic, numberOfCoinPiles, minCoins, maxCoins) {
   decideWhoFirst();
   if (!isPlayerTurn) isComputerFirst = true;
   notyf.open({ type: 'info', message: languageData.toastNewGame });
-}
-
-function decideWhoFirst() {
-  let nimSum = calculateNimSum(coins);
-  if (nimSum !== 0) {
-    statusElement.innerHTML = languageData.youFirst;
-    isPlayerTurn = true;
-  } else {
-    statusElement.innerHTML = languageData.computerFirst;
-    isPlayerTurn = false;
-  }
 }
 
 function isWin(isPlayerMove) {
@@ -193,14 +198,13 @@ function isWin(isPlayerMove) {
 
 function playerMove(row) {
   statusElement.innerHTML = getLanguageWithValue('rowSelected', {
-    row: getGetOrdinal(row),
+    row: getGetOrdinal(row + 1),
   });
-  row -= 1;
   const move = () => {
     playerSelectedRow = row;
     isPlayerSelectedRow = true;
     isPlayerMoved = true;
-    coins[row]--;
+    coins[row] -= 1;
     remapCoins();
   };
   if (!isPlayerSelectedRow) {
@@ -229,10 +233,10 @@ function playerMove(row) {
 }
 
 function computerMove() {
-  for (let i = 0; i < numberOfCoinPiles; i++) {
+  for (let i = 0; i < numberOfCoinPiles; i += 1) {
     let copyCoins = [...coins];
     while (copyCoins[i] > 0) {
-      copyCoins[i]--;
+      copyCoins[i] -= 1;
       if (calculateNimSum(copyCoins) === 0) {
         coins = copyCoins;
         isPlayerSelectedRow = false;
@@ -250,7 +254,7 @@ function computerMove() {
   let randomRow;
   do randomRow = getRandomIntInclusive(1, numberOfCoinPiles - 1);
   while (coins[randomRow] === 0);
-  let randomMove = getRandomIntInclusive(1, coins[randomRow]);
+  const randomMove = getRandomIntInclusive(1, coins[randomRow]);
   coins[randomRow] -= randomMove;
   isPlayerSelectedRow = false;
   playerSelectedRow = null;
@@ -281,7 +285,7 @@ function onRowClicked(event) {
   }
 }
 
-function onTurnOverClicked(event) {
+function onTurnOverClicked() {
   if (!isGamePlaying) return;
   if (isComputerFirst) {
     isComputerFirst = false;
@@ -298,14 +302,14 @@ function onTurnOverClicked(event) {
   }
 }
 
-let gameRows = document.querySelectorAll('.game-row');
+const gameRows = document.querySelectorAll('.game-row');
 gameRows.forEach((gameRow) =>
   gameRow.addEventListener('click', (event) => onRowClicked(event))
 );
 document.addEventListener('keydown', (event) => {
   const gameKeys = ['1', '2', '3', '4', 'd', 'f', 'j', 'k'];
   const keyPressed = event.key.toLowerCase();
-  let newEvent = { target: null };
+  const newEvent = { target: null };
   if (gameKeys.includes(keyPressed)) {
     if (keyPressed === '1' || keyPressed === 'd') {
       newEvent.target = document.querySelector('#game-row-1-tr td');
@@ -328,7 +332,7 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-let turnOverButton = document.getElementById('turn-over-btn');
+const turnOverButton = document.getElementById('turn-over-btn');
 turnOverButton.addEventListener('click', (event) => onTurnOverClicked(event));
 document.addEventListener('keydown', (event) => {
   if (['Enter', ' '].includes(event.key)) {
@@ -337,7 +341,7 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-let newGameButton = document.getElementById('new-game-btn');
+const newGameButton = document.getElementById('new-game-btn');
 newGameButton.addEventListener('click', () =>
   newGame(isClassic, numberOfCoinPiles, minCoins, maxCoins)
 );
@@ -350,8 +354,8 @@ document.addEventListener('keydown', (event) => {
 
 // Option
 
-let optionButton = document.getElementById('option-btn');
-let optionSaveButton = document.getElementById('option-save-btn');
+const optionButton = document.getElementById('option-btn');
+const optionSaveButton = document.getElementById('option-save-btn');
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
@@ -360,12 +364,12 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-function saveOption(isClassic, numberOfCoinPiles, minCoins, maxCoins) {
+function saveOption(toSaveOptions) {
   if (storageAvailable('localStorage')) {
-    localStorage.setItem('isClassic', isClassic);
-    localStorage.setItem('numberOfCoinPiles', numberOfCoinPiles);
-    localStorage.setItem('minCoins', minCoins);
-    localStorage.setItem('maxCoins', maxCoins);
+    localStorage.setItem('isClassic', toSaveOptions.isClassic);
+    localStorage.setItem('numberOfCoinPiles', toSaveOptions.numberOfCoinPiles);
+    localStorage.setItem('minCoins', toSaveOptions.minCoins);
+    localStorage.setItem('maxCoins', toSaveOptions.maxCoins);
     notyf.open({
       type: 'success',
       message: languageData.optionSaved,
@@ -384,12 +388,12 @@ function loadOption() {
     numberOfCoinPiles = Number(localStorage.getItem('numberOfCoinPiles') ?? 4);
     minCoins = Number(localStorage.getItem('minCoins') ?? 1);
     maxCoins = Number(localStorage.getItem('maxCoins') ?? 10);
-    let gameRowElements = document.querySelectorAll('.game-row');
+    const gameRowElements = document.querySelectorAll('.game-row');
     if (numberOfCoinPiles === 3) {
-      let forHide = gameRowElements[gameRowElements.length - 1];
+      const forHide = gameRowElements[gameRowElements.length - 1];
       forHide.style = 'display: none;';
     } else if (numberOfCoinPiles === 4) {
-      let forShow = gameRowElements[gameRowElements.length - 1];
+      const forShow = gameRowElements[gameRowElements.length - 1];
       forShow.style = 'display: table-row;';
     }
     notyf.open({
@@ -410,27 +414,26 @@ const optionIsClassicElement = document.getElementById('is-classic-checkbox');
 const optionCoinPilesElement = document.getElementById('coin-piles-select');
 const optionMaxCoinRangeElement = document.getElementById('max-coins-range');
 const optionNowCoinElement = document.getElementById('option-now-coin');
-optionSaveButton.addEventListener('click', (event) => {
-  let optionIsClassic = optionIsClassicElement.checked;
+optionSaveButton.addEventListener('click', () => {
+  const optionIsClassic = optionIsClassicElement.checked;
   let optionCoinPiles = Number(optionCoinPilesElement.value);
   let optionMaxCoinRange = Number(optionMaxCoinRangeElement.value);
-
   if (optionIsClassic) {
     optionCoinPiles = 4;
     optionMaxCoinRange = 7;
   }
 
   isClassic = optionIsClassic;
-  numberOfCoinPiles = parseInt(optionCoinPiles);
-  maxCoins = parseInt(optionMaxCoinRange);
-  saveOption(isClassic, numberOfCoinPiles, minCoins, maxCoins);
-  newGame(isClassic, numberOfCoinPiles, minCoins, maxCoins);
+  numberOfCoinPiles = parseInt(optionCoinPiles, 10);
+  maxCoins = parseInt(optionMaxCoinRange, 10);
+  saveOption({ isClassic, numberOfCoinPiles, minCoins, maxCoins });
+  newGame();
 });
 
 optionMaxCoinRangeElement.addEventListener('change', (event) => {
   optionNowCoinElement.innerHTML = event.target.value;
 });
-optionButton.addEventListener('click', (event) => {
+optionButton.addEventListener('click', () => {
   optionIsClassicElement.checked = isClassic;
   optionCoinPilesElement.value = numberOfCoinPiles;
   optionNowCoinElement.innerHTML = maxCoins;
