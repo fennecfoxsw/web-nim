@@ -90,11 +90,20 @@ if (
   (pageLanguage === 'ko' && userLanguage !== 'ko-KR') ||
   (pageLanguage === 'en' && userLanguage === 'ko-KR')
 ) {
-  changeLanguageAlert.style = 'display: block;';
-  const dismissButton = document.getElementById('language-dismiss-button');
-  dismissButton.addEventListener('click', () => {
-    changeLanguageAlert.style = 'display: none;';
-  });
+  let isDismissClicked = '';
+  if (storageAvailable('localStorage')) {
+    isDismissClicked = localStorage.getItem('dismissLanguage') === 'true';
+  }
+  if (!isDismissClicked) {
+    changeLanguageAlert.style = 'display: block;';
+    const dismissButton = document.getElementById('language-dismiss-button');
+    dismissButton.addEventListener('click', () => {
+      changeLanguageAlert.style = 'display: none;';
+      if (storageAvailable('localStorage')) {
+        localStorage.setItem('dismissLanguage', true);
+      }
+    });
+  }
 }
 
 let languageData;
