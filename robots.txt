@@ -3,6 +3,7 @@ Allow: /
 Allow: /en/
 Allow: /ko/
 Disallow: /assets/
+Disallow: /media/
 Disallow: /LICENSE
 Disallow: /NOTICE
 Disallow: /README.md
