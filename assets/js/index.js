@@ -125,6 +125,7 @@ function getLanguageWithValue(message, values) {
 // Copyright © 2009 Fortune_Cookie_
 // https://community.shopify.com/c/Shopify-Design/Ordinal-Number-in-javascript-1st-2nd-3rd-4th/m-p/72156
 function getGetOrdinal(n) {
+  if (pageLanguage === 'ko') return `${n}번째`;
   const s = ['th', 'st', 'nd', 'rd'];
   const v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
@@ -305,7 +306,7 @@ function onRowClicked(event) {
     } else {
       selectedRow = clickedElement.parentNode;
     }
-    playerMove(selectedRow.dataset.gameRow);
+    playerMove(parseInt(selectedRow.dataset.gameRow));
   }
 }
 
