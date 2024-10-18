@@ -162,7 +162,10 @@ function remapCoins() {
   for (let i = 0; i < numberOfCoinPiles; i += 1)
     coinSpans[i].innerHTML = '⚫'.repeat(coins[i]);
   const gameBoard = document.getElementById('game-board');
-  twemoji.parse(gameBoard, { className: 'emoji mx-3' });
+  twemoji.parse(gameBoard, {
+    className: 'emoji mx-3',
+    base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
+  });
   gameBoard.addEventListener('dragstart', (event) => {
     event.preventDefault();
   });
